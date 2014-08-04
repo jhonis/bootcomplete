@@ -18,8 +18,8 @@
             bootstrapClasses.formControl = 'form-control';
             bootstrapClasses.btn = 'btn btn-default';
         } else if (settings.bootstrapVersion == 2) {
-            bootstrapClasses.inputGroup = 'input-append span10';
-            bootstrapClasses.formControl = 'input-block-level';
+            bootstrapClasses.inputGroup = 'input-append';
+            bootstrapClasses.formControl = 'input-block-level span9';
             bootstrapClasses.btn = 'btn';
         } else {
             alert('Bootstrap version incompatible');
@@ -102,6 +102,9 @@
                 }
                 var inputSelected = $('<input type="text"/>').attr('id', 'bc-selected-' + id).addClass(bootstrapClasses.formControl).val(text).attr('disabled', 'disabled');
                 var removeButton = $('<button type="button"/>').addClass(bootstrapClasses.btn).click(clear);
+				if (settings.bootstrapVersion == 2) {
+					removeButton.css({width: '26%'});
+				}
                 var glyph = $('<span/>').addClass('glyphicon glyphicon-remove');
                 removeButton.append(glyph);
                 removeButton.append(' Remover');

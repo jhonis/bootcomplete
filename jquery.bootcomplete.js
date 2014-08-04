@@ -18,7 +18,7 @@
             bootstrapClasses.formControl = 'form-control';
             bootstrapClasses.btn = 'btn btn-default';
         } else if (settings.bootstrapVersion == 2) {
-            bootstrapClasses.inputGroup = 'input-append';
+            bootstrapClasses.inputGroup = 'input-append span12';
             bootstrapClasses.formControl = 'input-block-level span9';
             bootstrapClasses.btn = 'btn';
         } else {

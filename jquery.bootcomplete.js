@@ -25,13 +25,6 @@
             alert('Bootstrap version incompatible');
         }
 
-        function clear() {
-            $(instance).val('');
-            $('#bc-hidden-'+ id).val('');
-            $('#bc-div-selected-'+ id).hide();
-            $(instance).show();
-        }
-
         function print() {
             if (!$(instance).is(":disabled")) {
                 $(instance).blur(function () {
@@ -101,10 +94,10 @@
                     inputGroup = $('<span/>').addClass('input-group-btn');
                 }
                 var inputSelected = $('<input type="text"/>').attr('id', 'bc-selected-' + id).addClass(bootstrapClasses.formControl).val(text).attr('disabled', 'disabled');
-                var removeButton = $('<button type="button"/>').addClass(bootstrapClasses.btn).click(clear);
-				if (settings.bootstrapVersion == 2) {
-					removeButton.css({width: '26%'});
-				}
+                var removeButton = $('<button type="button"/>').addClass(bootstrapClasses.btn).click($.fn.bootcomplete.clear);
+                if (settings.bootstrapVersion == 2) {
+                    removeButton.css({width: '26%'});
+                }
                 var glyph = $('<span/>').addClass('glyphicon glyphicon-remove');
                 removeButton.append(glyph);
                 removeButton.append(' Remover');
@@ -128,6 +121,14 @@
         return this.each(function () {
             return bootcomplete(oInit, $(this));
         });
+    };
+
+    // methods
+    $.fn.bootcomplete.clear = function() {
+        $(instance).val('');
+        $('#bc-hidden-'+ id).val('');
+        $('#bc-div-selected-'+ id).hide();
+        $(instance).show();
     };
 
     // plugin defaults

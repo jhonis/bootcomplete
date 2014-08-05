@@ -26,7 +26,7 @@
         }
 
         function print() {
-            if (!$(instance).is(":disabled")) {
+            if (!$(instance).is(":disabled") && !$(instance).is(".bootcomplete")) {
                 $(instance).blur(function () {
                     $(this).val('');
                 });
@@ -94,7 +94,7 @@
                     inputGroup = $('<span/>').addClass('input-group-btn');
                 }
                 var inputSelected = $('<input type="text"/>').attr('id', 'bc-selected-' + id).addClass(bootstrapClasses.formControl).val(text).attr('disabled', 'disabled');
-                var removeButton = $('<button type="button"/>').addClass(bootstrapClasses.btn).click($.fn.bootcomplete.clear);
+                var removeButton = $('<button type="button"/>').addClass(bootstrapClasses.btn).click(_clear);
                 if (settings.bootstrapVersion == 2) {
                     removeButton.css({width: '26%'});
                 }
@@ -112,23 +112,34 @@
                 $(instance).parent().append(hidden);
                 $(instance).parent().append(divSelected);
             }
+            $(instance).addClass('bootcomplete');
         }
-
-        return print();
+        print();
+        return this;
     }
 
-    $.fn.bootcomplete = function (oInit) {
-        return this.each(function () {
-            return bootcomplete(oInit, $(this));
-        });
+    function _clear(event) {
+        var btn = event.currentTarget;
+        $(btn).parent().parent().find('.bootcomplete').bootcomplete().clear();
     };
 
-    // methods
-    $.fn.bootcomplete.clear = function() {
-        $(instance).val('');
-        $('#bc-hidden-'+ id).val('');
-        $('#bc-div-selected-'+ id).hide();
-        $(instance).show();
+    $.fn.bootcomplete = function (oInit) {
+        var elements = this;
+        this.each(function () {
+            bootcomplete(oInit, $(this));
+        });
+
+        this.clear = function() {
+            elements.each(function() {
+                var id = $(this).attr('id');
+                $(this).val('');
+                $('#bc-hidden-'+ id).val('');
+                $('#bc-div-selected-'+ id).hide();
+                $(this).show();
+            });
+        };
+
+        return this;
     };
 
     // plugin defaults
